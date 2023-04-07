@@ -2,10 +2,27 @@
 
 namespace App\Controllers;
 
+use App\Models\Barang as ModelsBarang;
 use CodeIgniter\RESTful\ResourceController;
+use App\Models\User;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class Barang extends ResourceController
 {
+    protected $user;
+    protected $barang;
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
+        parent::initController($request, $response, $logger);
+        $this->user = new User();
+        $this->barang = new ModelsBarang();
+        // Add your code here.
+    }
     /**
      * Return an array of resource objects, themselves in array format
      *
@@ -14,6 +31,10 @@ class Barang extends ResourceController
     public function index()
     {
         //
+        $data['title'] = "Barang";
+        $data['user'] = $this->user->where("email", session("email"))->first();
+        $data['barang'] = $this->barang->findAll();
+        return view("barang/index", $data);
     }
 
     /**

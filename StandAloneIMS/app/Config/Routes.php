@@ -33,6 +33,15 @@ $routes->get('/', 'Auth::index');
 $routes->post('/', 'Auth::doLogin');
 $routes->get('/Logout', 'Auth::doLogout');
 $routes->get('/Dashboard', 'Dashboard::index', ['filter' => "isLoggedIn"]);
+$routes->group("/Barang", function ($routes) {
+    $routes->get("/", "Barang::index");
+    $routes->post("/", "Barang::create");
+    $routes->get("/New", "Barang::new");
+    $routes->get("/Detail/(:num)", "Barang::show/$1");
+    $routes->get("/Edit/(:num)", "Barang::edit/$1");
+    $routes->put("/Update/(:num)", "Barang::update/$1");
+    $routes->delete("/Delete/(:num)", "Barang::delete/$1");
+});
 
 /*
  * --------------------------------------------------------------------

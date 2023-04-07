@@ -27,7 +27,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-light sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">IMS</a>
+            <a class="navbar-brand" href="<?= base_url("/Dashboard") ?>">IMS</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -42,11 +42,11 @@
                             Barang
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">View Data Barang</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url("/Barang") ?>">View Data Barang</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Add New Barang</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url("/Barang/New") ?>">Add New Barang</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -54,11 +54,11 @@
                             Transaksi
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">View Data Transaksi</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url("/Transaksi") ?>">View Data Transaksi</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Add New Transaksi</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url("/Transaksi/New") ?>">Add New Transaksi</a></li>
                         </ul>
                     </li>
                 </ul>

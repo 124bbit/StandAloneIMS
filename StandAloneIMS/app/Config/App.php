@@ -201,7 +201,7 @@ class App extends BaseConfig
      *
      * @deprecated use Config\Session::$matchIP instead.
      */
-    public bool $sessionMatchIP = false;
+    public bool $sessionMatchIP = true;
 
     /**
      * --------------------------------------------------------------------------
