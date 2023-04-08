@@ -32,6 +32,7 @@ class Barang extends ResourceController
     {
         //
         $data['title'] = "Barang";
+        $data['namaTable'] = "Barang";
         $data['user'] = $this->user->where("email", session("email"))->first();
         $data['barang'] = $this->barang->findAll();
         return view("barang/index", $data);
@@ -45,6 +46,21 @@ class Barang extends ResourceController
     public function show($id = null)
     {
         //
+        if (!$this->barang->find($id)) {
+            session()->setFlashdata("err", "Data Barang tidak ditemukan !");
+            return redirect()->to('/Barang');
+        }
+        $data['title'] = "Detail Barang ";
+        $data['user'] = $data['user'] = $this->user->where("email", session("email"))->first();
+        $data['barang'] = $this->barang->find($id);
+        $data['header'] = "Detail Barang " . $data['barang']['namaBarang'];
+        $tglbuat = date_create($data['barang']['created_at']);
+        $tglubah = date_create($data['barang']['updated_at']);
+        $data['dibuat_tgl'] = date_format($tglbuat, "d/m/Y H:i:s");
+        $data['diubah_tgl'] = date_format($tglubah, "d/m/Y H:i:s");
+        $data['dibuat'] = $this->user->find($data['barang']['created_by']);
+        $data['diubah'] = $this->user->find($data['barang']['created_by']);
+        return view("barang/detail", $data);
     }
 
     /**

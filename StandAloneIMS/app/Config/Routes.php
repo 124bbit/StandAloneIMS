@@ -29,18 +29,19 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Auth::index');
+$routes->get('/', 'Auth::index', ['filter' => "redirectIfLoggedIn"]);
 $routes->post('/', 'Auth::doLogin');
 $routes->get('/Logout', 'Auth::doLogout');
 $routes->get('/Dashboard', 'Dashboard::index', ['filter' => "isLoggedIn"]);
+// Barang
 $routes->group("/Barang", function ($routes) {
-    $routes->get("/", "Barang::index");
-    $routes->post("/", "Barang::create");
-    $routes->get("/New", "Barang::new");
-    $routes->get("/Detail/(:num)", "Barang::show/$1");
-    $routes->get("/Edit/(:num)", "Barang::edit/$1");
-    $routes->put("/Update/(:num)", "Barang::update/$1");
-    $routes->delete("/Delete/(:num)", "Barang::delete/$1");
+    $routes->get("/", "Barang::index", ['filter' => "isLoggedIn"]);
+    $routes->post("/", "Barang::create", ['filter' => "isLoggedIn"]);
+    $routes->get("New", "Barang::new", ['filter' => "isLoggedIn"]);
+    $routes->get("Detail/(:num)", "Barang::show/$1", ['filter' => "isLoggedIn"]);
+    $routes->get("Edit/(:num)", "Barang::edit/$1", ['filter' => "isLoggedIn"]);
+    $routes->put("Update/(:num)", "Barang::update/$1", ['filter' => "isLoggedIn"]);
+    $routes->delete("Delete/(:num)", "Barang::delete/$1", ['filter' => "isLoggedIn"]);
 });
 
 /*

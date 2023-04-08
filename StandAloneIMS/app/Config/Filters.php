@@ -22,6 +22,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'isLoggedIn' => \App\Filters\IsLoggedIn::class, // tambahkan ini
+        'redirectIfLoggedIn' => \App\Filters\RedirectIfLoggedIn::class, // tambahkan ini
     ];
 
     /**

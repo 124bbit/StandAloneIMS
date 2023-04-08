@@ -23,6 +23,7 @@ class Dashboard extends BaseController
     public function index()
     {
         $data['title'] = "Dashboard";
+        $data['header'] = "Dashboard";
         // $data['User'] = $this->user->where("email", session()->get("email"))->first();
         return view('dashboard/index', $data);
     }
