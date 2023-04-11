@@ -11,6 +11,9 @@
 
 <body>
     <?= $this->include("templates/layout/navbar") ?>
+    <div class="d-flex justify-content-center py-4">
+        <?= $this->include("templates/layout/alert") ?>
+    </div>
     <?= $this->include("templates/layout/main_table") ?>
     <?= $this->include("templates/layout/js_datatables") ?>
 </body>

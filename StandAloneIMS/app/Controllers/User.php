@@ -2,10 +2,24 @@
 
 namespace App\Controllers;
 
+use App\Models\User as ModelsUser;
 use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class User extends ResourceController
 {
+    protected $user;
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
+        parent::initController($request, $response, $logger);
+        $this->user = new ModelsUser();
+        // Add your code here.
+    }
     /**
      * Return an array of resource objects, themselves in array format
      *
@@ -14,6 +28,11 @@ class User extends ResourceController
     public function index()
     {
         //
+        $data['title'] = "User";
+        $data['namaTable'] = "User";
+        $data['user'] = $this->user->where("email", session("email"))->first();
+        $data['users'] = $this->user->findAll();
+        return view("user/index", $data);
     }
 
     /**

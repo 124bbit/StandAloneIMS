@@ -51,7 +51,7 @@ class Barang extends ResourceController
             return redirect()->to('/Barang');
         }
         $data['title'] = "Detail Barang ";
-        $data['user'] = $data['user'] = $this->user->where("email", session("email"))->first();
+        $data['user'] = $this->user->where("email", session("email"))->first();
         $data['barang'] = $this->barang->find($id);
         $data['header'] = "Detail Barang " . $data['barang']['namaBarang'];
         $tglbuat = date_create($data['barang']['created_at']);
@@ -71,6 +71,10 @@ class Barang extends ResourceController
     public function new()
     {
         //
+        $data['title'] = "Add New Barang ";
+        $data['header'] = "Add New Barang ";
+        $data['user']  = $this->user->where("email", session("email"))->first();
+        return view("barang/add", $data);
     }
 
     /**
@@ -81,6 +85,33 @@ class Barang extends ResourceController
     public function create()
     {
         //
+        if (!$this->request->is('post')) {
+            session()->setFlashData('err', 'HTTP Method Is Not POST !');
+            return redirect()->to('/Dashboard');
+        }
+        $dataPost = $this->request->getPost([
+            "namaBarang",
+            "Qty",
+        ]);
+        $dataUser = $this->user->where("email", session()->get("email"))->first();
+        $query = $this->barang->save([
+            "namaBarang" => $dataPost['namaBarang'],
+            "Qty" => $dataPost['Qty'],
+            "created_by" => $dataUser['idUser'],
+            "updated_by" => $dataUser['idUser']
+        ]);
+        if (!$query) {
+            session()->setFlashData('err', 'Something went wrong !');
+            return redirect()->to('/Barang/New');
+        }
+        $log = [
+            "nama" => session()->get("nama"),
+            "ipAddress" => $this->request->getIPAddress(),
+            "namaBarang" => $dataPost['namaBarang'],
+        ];
+        log_message("info", "User {nama} creating New Barang = {namaApplicants} using this IP {ipAddress}", $log);
+        session()->setFlashData('msg', 'Success Create New Barang');
+        return redirect()->to('/Barang');
     }
 
     /**
@@ -91,6 +122,15 @@ class Barang extends ResourceController
     public function edit($id = null)
     {
         //
+        if (!$this->barang->find($id)) {
+            session()->setFlashData('err', 'Barang Tidak ditemukan !');
+            return redirect()->to('/Barang');
+        }
+        $data['title'] = "Update  Barang ";
+        $data['header'] = "Update Barang ";
+        $data['user']  = $this->user->where("email", session("email"))->first();
+        $data['barang'] = $this->barang->find($id);
+        return view("barang/update", $data);
     }
 
     /**
@@ -101,6 +141,30 @@ class Barang extends ResourceController
     public function update($id = null)
     {
         //
+        if (!$this->request->is('put')) {
+            session()->setFlashData('err', 'HTTP Method Is Not PUT !');
+            return redirect()->to('/Dashboard');
+        }
+        $dataPost = $this->request->getPost();
+        $dataUser = $this->user->where("email", session()->get("email"))->first();
+        $query = $this->barang->save([
+            "idBarang" => $id,
+            "namaBarang" => $dataPost['namaBarang'],
+            "Qty" => $dataPost['Qty'],
+            "updated_by" => $dataUser['idUser']
+        ]);
+        if (!$query) {
+            session()->setFlashData('err', 'Something went wrong !');
+            return redirect()->to('/Barang/Update/' . $id);
+        }
+        $log = [
+            "nama" => session()->get("nama"),
+            "ipAddress" => $this->request->getIPAddress(),
+            "namaBarang" => $dataPost['namaBarang'],
+        ];
+        log_message("info", "User {nama} Modifying  Barang = {namaApplicants} using this IP {ipAddress}", $log);
+        session()->setFlashData('msg', 'Success Modifying Barang');
+        return redirect()->to('/Barang');
     }
 
     /**
@@ -111,5 +175,23 @@ class Barang extends ResourceController
     public function delete($id = null)
     {
         //
+        $barang = $this->barang->find($id);
+        if (!$barang) {
+            session()->setFlashData('err', 'Barang Tidak Temukan ! ');
+        }
+        $query = $this->barang->delete($id);
+        if (!$query) {
+            session()->setFlashData('err', 'Gagal Menghapus Barang !');
+            return redirect()->to('Barang');
+        } else {
+            session()->setFlashData('msg', 'Berhasil Menghapus Barang');
+            $log = [
+                "nama" => session()->get("nama"),
+                "ipAddress" => $this->request->getIPAddress(),
+                "namaBarang" => $barang['namaBarang'],
+            ];
+            log_message("info", "User {nama} Deleting  Barang = {namaBarang} using this IP {ipAddress}", $log);
+            return redirect()->to('Barang');
+        }
     }
 }

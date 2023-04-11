@@ -44,4 +44,40 @@ class Transaksi extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+    public function store($data)
+    {
+        $barangModel = new Barang();
+        return $barangModel->transaksiBarang($data['idBarang'], $data['Jml']);
+    }
+    public function tblTransaksi()
+    {
+        $db      = \Config\Database::connect();
+        $builder = $db->table('transaksi');
+        return $builder->select("transaksi.idTransaksi,transaksi.created_by,transaksi.deleted_at,transaksi.created_at AS tgl,users.idUser,users.nama")->where("transaksi.deleted_at", NULL)->join("users", "users.idUser = transaksi.created_by")->get()->getResultArray();
+        // $transaksi->select("transaksi.idTransaksi,transaksi.created_by,transaksi.created_at,users.idUser,users.nama")->join("users", "users.idUser = transaksi.created_by")->findAll();
+    }
+    public function detailTransaksi($id)
+    {
+        $db      = \Config\Database::connect();
+        $builder = $db->table('transaksi');
+        return $builder
+            ->select("
+        transaksi.idTransaksi,
+        transaksi.created_by,
+        transaksi.created_at AS tgl,
+        detail_transaksi.idDetailTransaksi,
+        detail_transaksi.Jml,
+        detail_transaksi.transaksiId,
+        detail_transaksi.barangId,
+        barangs.idBarang,
+        barangs.namaBarang,
+        users.idUser,
+        users.nama
+        ")
+            ->where("transaksi.idTransaksi", $id)
+            ->join("detail_transaksi", "detail_transaksi.transaksiId = transaksi.idTransaksi")
+            ->join("barangs", "barangs.idBarang = detail_transaksi.barangId")
+            ->join("users", "users.idUser = transaksi.created_by")
+            ->get()->getResultArray();
+    }
 }

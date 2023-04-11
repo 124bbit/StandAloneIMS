@@ -41,7 +41,26 @@ $routes->group("/Barang", function ($routes) {
     $routes->get("Detail/(:num)", "Barang::show/$1", ['filter' => "isLoggedIn"]);
     $routes->get("Edit/(:num)", "Barang::edit/$1", ['filter' => "isLoggedIn"]);
     $routes->put("Update/(:num)", "Barang::update/$1", ['filter' => "isLoggedIn"]);
-    $routes->delete("Delete/(:num)", "Barang::delete/$1", ['filter' => "isLoggedIn"]);
+    $routes->get("Delete/(:num)", "Barang::delete/$1", ['filter' => "isLoggedIn"]);
+});
+$routes->group("/Transaksi", function ($routes) {
+    $routes->get("/", "Transaksi::index", ['filter' => "isLoggedIn"]);
+    $routes->post("/", "Transaksi::create", ['filter' => "AllowTransaksi"]);
+    $routes->get("New", "Transaksi::new", ['filter' =>  "AllowTransaksi"]);
+    $routes->get("Detail/(:num)", "Transaksi::show/$1", ['filter' => "isLoggedIn"]);
+    $routes->get("Edit/(:num)", "Transaksi::edit/$1", ['filter' =>  "AllowTransaksi"]);
+    $routes->put("Update/(:num)", "Transaksi::update/$1", ['filter' => "AllowTransaksi"]);
+    $routes->get("Delete/(:num)", "Transaksi::delete/$1", ['filter' => "AllowTransaksi"]);
+});
+$routes->group("/User", function ($routes) {
+    $routes->get("/", "User::index", ['filter' => "AllowUser"]);
+    $routes->post("/", "User::create", ['filter' => "AllowUser"]);
+    $routes->get("New", "User::new", ['filter' =>  "AllowUser"]);
+    $routes->get("ResetPassword/(:num)", "User::ResetPassword/$1", ['filter' =>  "AllowUser"]);
+    $routes->get("Detail/(:num)", "User::show/$1", ['filter' => "AllowUser"]);
+    $routes->get("Edit/(:num)", "User::edit/$1", ['filter' =>  "AllowUser"]);
+    $routes->put("Update/(:num)", "User::update/$1", ['filter' => "AllowUser"]);
+    $routes->get("Delete/(:num)", "User::delete/$1", ['filter' => "AllowUser"]);
 });
 
 /*

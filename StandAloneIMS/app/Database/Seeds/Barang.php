@@ -26,13 +26,13 @@ class Barang extends Seeder
             ],
             [
                 "namaBarang" => "Type-C Dongle",
-                "Qty" => 150,
+                "Qty" => 300,
                 "created_by" => 3,
                 "updated_by" => 3,
             ],
             [
                 "namaBarang" => "Stop Kontak",
-                "Qty" => 87,
+                "Qty" => 400,
                 "created_by" => 3,
                 "updated_by" => 3,
             ],

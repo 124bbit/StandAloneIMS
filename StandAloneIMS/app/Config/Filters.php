@@ -21,8 +21,16 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'isLoggedIn' => \App\Filters\IsLoggedIn::class, // tambahkan ini
-        'redirectIfLoggedIn' => \App\Filters\RedirectIfLoggedIn::class, // tambahkan ini
+        'isLoggedIn' => \App\Filters\IsLoggedIn::class,
+        'redirectIfLoggedIn' => \App\Filters\RedirectIfLoggedIn::class,
+        'AllowTransaksi' => [
+            \App\Filters\IsLoggedIn::class,
+            \App\Filters\AllowTransaksi::class,
+        ],
+        'AllowUser' => [
+            \App\Filters\IsLoggedIn::class,
+            \App\Filters\AllowUser::class,
+        ],
     ];
 
     /**
