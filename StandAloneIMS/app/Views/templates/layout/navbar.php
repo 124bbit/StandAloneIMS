@@ -34,6 +34,20 @@
                         <li><a class="dropdown-item" href="<?= base_url("/Transaksi/New") ?>">Add New Transaksi</a></li>
                     </ul>
                 </li>
+                <?php if ($user['role'] == "SuperAdmin") : ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            User
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<?= base_url("/User") ?>">View Data User</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="<?= base_url("/User/New") ?>">Add New User</a></li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
             </ul>
             <a href="<?= base_url("/Logout") ?>" class="btn btn-outline-danger btn-sm">Logout</a>
         </div>

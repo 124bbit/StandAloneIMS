@@ -109,7 +109,7 @@ class Barang extends ResourceController
             "ipAddress" => $this->request->getIPAddress(),
             "namaBarang" => $dataPost['namaBarang'],
         ];
-        log_message("info", "User {nama} creating New Barang = {namaApplicants} using this IP {ipAddress}", $log);
+        log_message("info", "User {nama} creating New Barang = {namaBarang} using this IP {ipAddress}", $log);
         session()->setFlashData('msg', 'Success Create New Barang');
         return redirect()->to('/Barang');
     }
@@ -162,7 +162,7 @@ class Barang extends ResourceController
             "ipAddress" => $this->request->getIPAddress(),
             "namaBarang" => $dataPost['namaBarang'],
         ];
-        log_message("info", "User {nama} Modifying  Barang = {namaApplicants} using this IP {ipAddress}", $log);
+        log_message("info", "User {nama} Modifying  Barang = {namaBarang} using this IP {ipAddress}", $log);
         session()->setFlashData('msg', 'Success Modifying Barang');
         return redirect()->to('/Barang');
     }
